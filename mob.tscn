@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6l17t6yqtpcf"]
+
+[ext_resource type="PackedScene" uid="uid://ncat16xmjcng" path="res://art/mob.glb" id="1_dy6sc"]
+
+[node name="Mob" type="CharacterBody3D"]
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="mob" parent="Pivot" instance=ExtResource("1_dy6sc")]
