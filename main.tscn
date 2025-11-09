@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://4h1he5q8pxer"]
+[gd_scene load_steps=12 format=3 uid="uid://4h1he5q8pxer"]
 
+[ext_resource type="Script" uid="uid://bgo6kprqdk0qd" path="res://Main.cs" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://baldq0mppwyfa" path="res://player.tscn" id="1_2h1kd"]
 [ext_resource type="Script" uid="uid://31uhsrcprhp5" path="res://CameraPivot.cs" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://c6l17t6yqtpcf" path="res://mob.tscn" id="2_lquwl"]
 [ext_resource type="Script" uid="uid://bais4j77aosgo" path="res://Camera3d.cs" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://yqjd7o25xpv0" path="res://ScoreLabel.cs" id="6_7mycd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g60n3"]
 size = Vector3(60, 2, 60)
@@ -10,10 +13,27 @@ size = Vector3(60, 2, 60)
 [sub_resource type="BoxMesh" id="BoxMesh_dfhur"]
 size = Vector3(60, 2, 60)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_placeholder_orange"]
+albedo_color = Color(1, 0.498039, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_placeholder"]
+
+[sub_resource type="Curve3D" id="Curve3D_lquwl"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -10, 0, -10, 0, 0, 0, 0, 0, 0, 10, 0, -10, 0, 0, 10, 0, 0, 0, 10, 0, 10, 0, 0, 0, 0, 0, 0, -10, 0, 10),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
 [node name="Main" type="Node"]
+script = ExtResource("1_1bvp3")
+MobScene = ExtResource("2_lquwl")
 
 [node name="Ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 4
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 shape = SubResource("BoxShape3D_g60n3")
@@ -32,6 +52,56 @@ transform = Transform3D(1, 0, 0, 0, 0.700909, 0.71325, 0, -0.71325, 0.700909, 0,
 script = ExtResource("2_0xm2m")
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.943148, 0.332375, 0, -0.332375, 0.943148, 0, 29.1191, 66.0512)
+transform = Transform3D(1, 0, 0, 0, 0.943148, 0.332375, 0, -0.332375, 0.943148, 0, 14.7065, 15.1151)
 fov = 33.75
 script = ExtResource("3_h2yge")
+
+[node name="Cylinders" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -10)
+material_override = SubResource("StandardMaterial3D_placeholder_orange")
+mesh = SubResource("CylinderMesh_placeholder")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 10)
+material_override = SubResource("StandardMaterial3D_placeholder_orange")
+mesh = SubResource("CylinderMesh_placeholder")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -10)
+material_override = SubResource("StandardMaterial3D_placeholder_orange")
+mesh = SubResource("CylinderMesh_placeholder")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
+material_override = SubResource("StandardMaterial3D_placeholder_orange")
+mesh = SubResource("CylinderMesh_placeholder")
+
+[node name="SpawnPath" type="Path3D" parent="."]
+curve = SubResource("Curve3D_lquwl")
+
+[node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10, 0, -10)
+rotation_mode = 1
+cubic_interp = false
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ScoreLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Score: 0"
+script = ExtResource("6_7mycd")
+
+[connection signal="timeout" from="MobTimer" to="." method="OnMobTimerTimeout"]
