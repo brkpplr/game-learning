@@ -10,4 +10,10 @@ public partial class ScoreLabel : Label
 		_score += 1;
 		Text = $"Score: {_score}";
 	}
+
+	public void UpdateScore(int score)
+	{
+		_score = score;
+		Text = $"Score: {_score}";
+	}
 }

@@ -16,3 +16,12 @@ script = ExtResource("1_3qkp7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_dugrb")
+
+[node name="FoodDetectionArea" type="Area3D" parent="."]
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FoodDetectionArea"]
+shape = SubResource("SphereShape3D_dugrb")
+
+[connection signal="area_entered" from="FoodDetectionArea" to="." method="OnAreaEntered"]
+[connection signal="area_exited" from="FoodDetectionArea" to="." method="OnAreaExited"]

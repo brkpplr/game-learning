@@ -3,7 +3,9 @@ using System;
 
 public partial class Main : Node
 {
-	[Export] public PackedScene MobScene { get; set; }
+	[Export] public PackedScene FoodScene { get; set; }
+
+	private int _score;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -13,19 +15,35 @@ public partial class Main : Node
 		{
 			GD.PrintErr("Player node not found as a child of Main. Mobs will not spawn correctly.");
 		}
+
+		GetNode<Timer>("FoodTimer").Timeout += OnFoodTimerTimeout;
 	}
 
-	private void OnMobTimerTimeout()
+	private void OnFoodTimerTimeout()
 	{
-		Mob mob = MobScene.Instantiate<Mob>();
+		SpawnFood();
+	}
 
-		var mobSpawnLocation = GetNode<PathFollow3D>("SpawnPath/SpawnLocation");
-		mobSpawnLocation.ProgressRatio = GD.Randf();
+	private void SpawnFood()
+	{
+		Food food = FoodScene.Instantiate<Food>();
+		AddChild(food);
+		food.PickedUp += OnFoodPickedUp;
 
-		var playerPosition = GetNode<Player>("Player").Position;
-		mob.Initialize(mobSpawnLocation.Position, playerPosition);
+		// Position the food randomly on the ground
+		var ground = GetNode<StaticBody3D>("Ground");
+		var groundShape = ground.GetNode<CollisionShape3D>("CollisionShape3D").Shape as BoxShape3D;
+		var groundSize = groundShape.Size;
 
-		AddChild(mob);
-		mob.Squashed += GetNode<ScoreLabel>("UserInterface/ScoreLabel").OnMobSquashed;
+		float randomX = (float)GD.RandRange(-groundSize.X / 2, groundSize.X / 2);
+		float randomZ = (float)GD.RandRange(-groundSize.Z / 2, groundSize.Z / 2);
+
+		food.Position = new Vector3(randomX, 0, randomZ);
+	}
+
+	private void OnFoodPickedUp()
+	{
+		_score++;
+		GetNode<ScoreLabel>("UserInterface/ScoreLabel").UpdateScore(_score);
 	}
 }
