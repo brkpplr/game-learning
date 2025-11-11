@@ -23,7 +23,7 @@ window/stretch/mode="viewport"
 
 [dotnet]
 
-project/assembly_name="Squash the Creeps (3D)"
+project/assembly_name="game-sim"
 
 [input]
 

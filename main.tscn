@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://4h1he5q8pxer"]
+[gd_scene load_steps=11 format=3 uid="uid://4h1he5q8pxer"]
 
 [ext_resource type="Script" uid="uid://bgo6kprqdk0qd" path="res://Main.cs" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://baldq0mppwyfa" path="res://player.tscn" id="1_2h1kd"]
@@ -13,6 +13,8 @@ size = Vector3(60, 2, 60)
 
 [sub_resource type="BoxMesh" id="BoxMesh_dfhur"]
 size = Vector3(60, 2, 60)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_272bh"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_1bvp3")
@@ -63,5 +65,8 @@ text = "Score: 0"
 script = ExtResource("6_7mycd")
 
 [node name="FoodTimer" type="Timer" parent="."]
-wait_time = 0.75
+wait_time = 0.25
 autostart = true
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_272bh")

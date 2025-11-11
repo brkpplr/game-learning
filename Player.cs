@@ -5,7 +5,7 @@ public partial class Player : CharacterBody3D
 {
 	// How fast the player moves in meters per second.
 	[Export]
-	public int Speed { get; set; } = 25;
+	public int Speed { get; set; } = 100;
 	
 	// The downward acceleration when in the air, in meters per second squared.
 	[Export]

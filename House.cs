@@ -10,7 +10,7 @@ public partial class House : StaticBody3D
 
 	public override void _Ready()
 	{
-		OnBodyEntered(GetParent<Player>());
+		// Removed incorrect call to OnBodyEntered in _Ready()
 	}
 
 	private void OnBodyEntered(Node3D body)
