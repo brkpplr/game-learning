@@ -4,6 +4,7 @@ using System;
 public partial class Main : Node
 {
 	[Export] public PackedScene FoodScene { get; set; }
+	[Export] public PackedScene HouseScene { get; set; }
 
 	private int _score;
 
@@ -17,6 +18,7 @@ public partial class Main : Node
 		}
 
 		GetNode<Timer>("FoodTimer").Timeout += OnFoodTimerTimeout;
+		GetNode<House>("House").FoodScene = FoodScene;
 	}
 
 	private void OnFoodTimerTimeout()

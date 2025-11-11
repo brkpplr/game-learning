@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6aegcaaj216x"]
+
+[ext_resource type="Script" uid="uid://bs3fngfmhd4eo" path="res://House.cs" id="1_beef"]
+[ext_resource type="PackedScene" uid="uid://d4fwlf68whrfv" path="res://art/Container.blend" id="2_metfq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6syyc"]
+
+[node name="House" type="StaticBody3D"]
+script = ExtResource("1_beef")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("BoxShape3D_6syyc")
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="Container" parent="Node3D" instance=ExtResource("2_metfq")]

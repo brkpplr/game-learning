@@ -5,68 +5,30 @@ public partial class Player : CharacterBody3D
 {
 	// How fast the player moves in meters per second.
 	[Export]
-	public int Speed { get; set; } = 100;
+	public int Speed { get; set; } = 25;
 	
 	// The downward acceleration when in the air, in meters per second squared.
 	[Export]
 	public int FallAcceleration { get; set; } = 75;
-	
+
 	private Vector3 _targetVelocity = Vector3.Zero;
-	private bool _isAutoPickingUp = false;
+	private Vector3 direction = Vector3.Zero;
+	private bool _isAutoPickingUp = true;
 	private Food _targetFood = null;
 	private Main _mainNode;
+	private House _houseNode;
+
+	private int _foodCarried = 0;
+	private const int MaxFoodCarried = 10;
 
 	public override void _Ready()
 	{
 		_mainNode = GetNode<Main>("/root/Main");
+		_houseNode = GetNode<House>("/root/Main/House");
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		var direction = Vector3.Zero;
-
-
-		if (Input.IsActionPressed("auto_pick_up"))
-		{
-			_isAutoPickingUp = !_isAutoPickingUp;
-		}
-
-		if (!_isAutoPickingUp)
-		{
-			if (Input.IsActionPressed("move_right"))
-			{
-				direction.X += 1.0f;
-			}
-			if (Input.IsActionPressed("move_left"))
-			{
-				direction.X -= 1.0f;
-			}
-			if (Input.IsActionPressed("move_back"))
-			{
-				direction.Z += 1.0f;
-			}
-			if (Input.IsActionPressed("move_forward"))
-			{
-				direction.Z -= 1.0f;
-			}
-		}
-		else
-		{
-			if (_targetFood != null)
-			{
-				direction = (_targetFood.Position - Position).Normalized();
-				if (IsInRange(_targetFood))
-				{
-					_targetFood.PickUp();
-					_targetFood = FindClosestFood(); // Find next closest food
-				}
-			}
-			else
-			{
-				_targetFood = FindClosestFood();
-			}
-		}
-
 		if (direction != Vector3.Zero)
 		{
 			direction = direction.Normalized();
@@ -82,16 +44,47 @@ public partial class Player : CharacterBody3D
 		{
 			_targetVelocity.Y -= FallAcceleration * (float)delta;
 		}
-		
+
 		// Moving the character
 		Velocity = _targetVelocity;
 		MoveAndSlide();
-
-		if (_targetFood != null && IsInRange(_targetFood))
+	}
+	
+	public override void _Process(double delta) {
+		if (_isAutoPickingUp)
 		{
-			_targetFood.PickUp();
-			_targetFood = null;
+			if (_foodCarried >= MaxFoodCarried)
+			{
+				// Go to the house to drop off food
+				direction = (_houseNode.Position - Position).Normalized();
+			}
+			else
+						{
+				_targetFood = FindClosestFood(); // Find next closest food
+
+				if (_targetFood != null)
+				{
+					direction = (_targetFood.Position - Position).Normalized();
+					if (IsInRange(_targetFood))
+					{
+						_targetFood.PickUp();
+						_foodCarried++;
+						_targetFood = null;
+					}
+				}
+				else
+				{
+					direction = Vector3.Zero;
+				}
+			}
 		}
+	}
+
+	public void DropOffFood()
+	{
+		GD.Print($"Player dropped off {_foodCarried} food items.");
+		_houseNode.StoreFood(_foodCarried);
+		_foodCarried = 0;
 	}
 
 	private Food FindClosestFood()

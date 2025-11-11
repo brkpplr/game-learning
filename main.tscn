@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://4h1he5q8pxer"]
+[gd_scene load_steps=10 format=3 uid="uid://4h1he5q8pxer"]
 
 [ext_resource type="Script" uid="uid://bgo6kprqdk0qd" path="res://Main.cs" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://baldq0mppwyfa" path="res://player.tscn" id="1_2h1kd"]
 [ext_resource type="Script" uid="uid://31uhsrcprhp5" path="res://CameraPivot.cs" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://b6aegcaaj216x" path="res://house.tscn" id="3_272bh"]
 [ext_resource type="Script" uid="uid://bais4j77aosgo" path="res://Camera3d.cs" id="3_h2yge"]
 [ext_resource type="Script" uid="uid://yqjd7o25xpv0" path="res://ScoreLabel.cs" id="6_7mycd"]
 [ext_resource type="PackedScene" uid="uid://bkx8fl4uqyx4w" path="res://food.tscn" id="7_food_scene"]
@@ -16,6 +17,7 @@ size = Vector3(60, 2, 60)
 [node name="Main" type="Node"]
 script = ExtResource("1_1bvp3")
 FoodScene = ExtResource("7_food_scene")
+HouseScene = ExtResource("3_272bh")
 
 [node name="Ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -33,6 +35,9 @@ transform = Transform3D(0.679365, -0.518876, -0.518875, 0.59177, -0.0307165, 0.8
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_2h1kd")]
+
+[node name="House" parent="." instance=ExtResource("3_272bh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.95922, 1.07561, 0)
 
 [node name="CameraPivot" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.700909, 0.71325, 0, -0.71325, 0.700909, 0, 12.39, 16.41)
@@ -58,5 +63,5 @@ text = "Score: 0"
 script = ExtResource("6_7mycd")
 
 [node name="FoodTimer" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.75
 autostart = true
