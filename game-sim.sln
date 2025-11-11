@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squash the Creeps (3D)", "Squash the Creeps (3D).csproj", "{404E8AC8-9179-4689-B0FA-D63131386EB2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "game-sim", "game-sim.csproj", "{404E8AC8-9179-4689-B0FA-D63131386EB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

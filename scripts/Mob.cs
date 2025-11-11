@@ -23,18 +23,4 @@ public partial class Mob : CharacterBody3D
 		Velocity = Vector3.Forward * randomSpeed;
 		Velocity = Velocity.Rotated(Vector3.Up, Rotation.Y);
 	}
-
-	private void OnVisibilityNotifierScreenExited()
-	{
-		QueueFree();
-	}
-	
-	[Signal]
-	public delegate void SquashedEventHandler();
-
-	public void Squash()
-	{
-		EmitSignal(SignalName.Squashed);
-		QueueFree();
-	}
 }

@@ -1,0 +1,82 @@
+[gd_scene load_steps=12 format=3 uid="uid://4h1he5q8pxer"]
+
+[ext_resource type="Script" uid="uid://bgo6kprqdk0qd" path="res://scripts/Main.cs" id="1_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://baldq0mppwyfa" path="res://scenes/player.tscn" id="1_2h1kd"]
+[ext_resource type="Script" uid="uid://31uhsrcprhp5" path="res://scripts/CameraPivot.cs" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://b6aegcaaj216x" path="res://scenes/house.tscn" id="3_272bh"]
+[ext_resource type="Script" uid="uid://bais4j77aosgo" path="res://scripts/Camera3d.cs" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://bjgmwrcfsdhbl" path="res://scripts/StoredFoodLabel.cs" id="7_5vw27"]
+[ext_resource type="PackedScene" uid="uid://bkx8fl4uqyx4w" path="res://scenes/food.tscn" id="7_food_scene"]
+[ext_resource type="Script" uid="uid://bbo8fnj5v62iq" path="res://scripts/PlayerFoodLabel.cs" id="8_5vw27"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g60n3"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dfhur"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_272bh"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_1bvp3")
+FoodScene = ExtResource("7_food_scene")
+HouseScene = ExtResource("3_272bh")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_g60n3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_dfhur")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.679365, -0.518876, -0.518875, 0.59177, -0.0307165, 0.805522, -0.433904, -0.854298, 0.286187, -13.7876, 18.58, 8.67112)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("1_2h1kd")]
+
+[node name="House" parent="." instance=ExtResource("3_272bh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.95922, 1.07561, 0)
+
+[node name="CameraPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.700909, 0.71325, 0, -0.71325, 0.700909, 0, 12.39, 16.41)
+script = ExtResource("2_0xm2m")
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.71786, 0.696189, 0, -0.696189, 0.71786, 0, 78.2221, 57.5089)
+fov = 33.75
+script = ExtResource("3_h2yge")
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="StoredFoodLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Stored Food: 0"
+script = ExtResource("7_5vw27")
+
+[node name="PlayerFoodLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_top = 30.0
+offset_right = 109.0
+offset_bottom = 53.0
+theme_override_colors/font_color = Color(0.0352941, 0.188235, 0.0352941, 1)
+text = "Player Food: 0"
+script = ExtResource("8_5vw27")
+
+[node name="FoodTimer" type="Timer" parent="."]
+wait_time = 0.25
+autostart = true
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_272bh")
