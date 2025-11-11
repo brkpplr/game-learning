@@ -57,6 +57,9 @@ public partial class Player : CharacterBody3D
 			{
 				// Go to the house to drop off food
 				direction = (_houseNode.Position - Position).Normalized();
+				if (IsInRange(_houseNode)) {
+					DropOffFood();
+				}
 			}
 			else
 						{
@@ -107,8 +110,13 @@ public partial class Player : CharacterBody3D
 		return closestFood;
 	}
 
-	private bool IsInRange(Food food)
+	// private bool IsFoodInRange(Food food)
+	// {
+	// 	return Position.DistanceTo(food.Position) < 1.5f; // Adjust range as needed
+	// }
+
+	private bool IsInRange(Node3D node)
 	{
-		return Position.DistanceTo(food.Position) < 1.5f; // Adjust range as needed
+		return Position.DistanceTo(node.Position) < 2.5f; // Adjust range as needed
 	}
 }

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bkx8fl4uqyx4w"]
 
-[ext_resource type="Script" uid="uid://be76dw26omip" path="res://Food.cs" id="1_food_script"]
+[ext_resource type="Script" uid="uid://be76dw26omip" path="res://scripts/Food.cs" id="1_food_script"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_food"]
 radius = 0.4

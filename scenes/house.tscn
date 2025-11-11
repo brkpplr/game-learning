@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b6aegcaaj216x"]
 
-[ext_resource type="Script" uid="uid://bs3fngfmhd4eo" path="res://House.cs" id="1_beef"]
+[ext_resource type="Script" uid="uid://bs3fngfmhd4eo" path="res://scripts/House.cs" id="1_beef"]
 [ext_resource type="PackedScene" uid="uid://d4fwlf68whrfv" path="res://art/Container.blend" id="2_metfq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6syyc"]

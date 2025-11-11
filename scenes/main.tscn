@@ -1,12 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://4h1he5q8pxer"]
+[gd_scene load_steps=12 format=3 uid="uid://4h1he5q8pxer"]
 
-[ext_resource type="Script" uid="uid://bgo6kprqdk0qd" path="res://Main.cs" id="1_1bvp3"]
-[ext_resource type="PackedScene" uid="uid://baldq0mppwyfa" path="res://player.tscn" id="1_2h1kd"]
-[ext_resource type="Script" uid="uid://31uhsrcprhp5" path="res://CameraPivot.cs" id="2_0xm2m"]
-[ext_resource type="PackedScene" uid="uid://b6aegcaaj216x" path="res://house.tscn" id="3_272bh"]
-[ext_resource type="Script" uid="uid://bais4j77aosgo" path="res://Camera3d.cs" id="3_h2yge"]
-[ext_resource type="Script" uid="uid://yqjd7o25xpv0" path="res://ScoreLabel.cs" id="6_7mycd"]
-[ext_resource type="PackedScene" uid="uid://bkx8fl4uqyx4w" path="res://food.tscn" id="7_food_scene"]
+[ext_resource type="Script" uid="uid://bgo6kprqdk0qd" path="res://scripts/Main.cs" id="1_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://baldq0mppwyfa" path="res://scenes/player.tscn" id="1_2h1kd"]
+[ext_resource type="Script" uid="uid://31uhsrcprhp5" path="res://scripts/CameraPivot.cs" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://b6aegcaaj216x" path="res://scenes/house.tscn" id="3_272bh"]
+[ext_resource type="Script" uid="uid://bais4j77aosgo" path="res://scripts/Camera3d.cs" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://bjgmwrcfsdhbl" path="res://scripts/StoredFoodLabel.cs" id="7_5vw27"]
+[ext_resource type="PackedScene" uid="uid://bkx8fl4uqyx4w" path="res://scenes/food.tscn" id="7_food_scene"]
+[ext_resource type="Script" uid="uid://bbo8fnj5v62iq" path="res://scripts/PlayerFoodLabel.cs" id="8_5vw27"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g60n3"]
 size = Vector3(60, 2, 60)
@@ -56,13 +57,22 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ScoreLabel" type="Label" parent="UserInterface"]
+[node name="StoredFoodLabel" type="Label" parent="UserInterface"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Score: 0"
-script = ExtResource("6_7mycd")
+text = "Stored Food: 0"
+script = ExtResource("7_5vw27")
+
+[node name="PlayerFoodLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_top = 30.0
+offset_right = 109.0
+offset_bottom = 53.0
+theme_override_colors/font_color = Color(0.0352941, 0.188235, 0.0352941, 1)
+text = "Player Food: 0"
+script = ExtResource("8_5vw27")
 
 [node name="FoodTimer" type="Timer" parent="."]
 wait_time = 0.25

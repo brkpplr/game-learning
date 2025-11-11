@@ -46,6 +46,12 @@ public partial class Main : Node
 	private void OnFoodPickedUp()
 	{
 		_score++;
-		GetNode<ScoreLabel>("UserInterface/ScoreLabel").UpdateScore(_score);
+		GetNode<PlayerFoodLabel>("UserInterface/PlayerFoodLabel").OnFoodPickedUp();
+	}
+
+	public void OnFoodDroppedOff(int count)
+	{
+		GetNode<PlayerFoodLabel>("UserInterface/PlayerFoodLabel").OnFoodDroppedOff();
+		GetNode<StoredFoodLabel>("UserInterface/StoredFoodLabel").OnFoodDroppedOff(count);
 	}
 }
