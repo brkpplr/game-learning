@@ -7,12 +7,17 @@ public partial class Food : Area3D
 	[Signal]
 	public delegate void PickedUpEventHandler();
 
+	public void PickUp()
+	{
+		EmitSignal(SignalName.PickedUp);
+		QueueFree(); // Remove the food after being picked up
+	}
+
 	public void OnBodyEntered(Node3D body)
 	{
 		if (body.Name == "Player")
 		{
-			EmitSignal(SignalName.PickedUp);
-			QueueFree(); // Remove the food after being picked up
+			PickUp();
 		}
 	}
 
